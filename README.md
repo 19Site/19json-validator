@@ -90,3 +90,9 @@ try {
     console.error(err);
 }
 ```
+
+### Test
+
+```sh
+$ npm test
+```
