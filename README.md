@@ -21,7 +21,9 @@ const input = {
 
     name: 'tom',
 
-    description: '1a student'
+    description: '1a student',
+
+    skills: ['read', 'write', 'speak']
 };
 
 // schema
@@ -64,6 +66,16 @@ const schema = {
 
         // allow empty
         empty: true
+    },
+
+    // skills field
+    skills: {
+
+        // optional
+        optional: true,
+        
+        // is array
+        isArray: true
     }
 };
 
