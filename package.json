@@ -1,0 +1,26 @@
+{
+  "name": "19json-validator",
+  "version": "0.0.1",
+  "description": "Simple JSON validator",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/19Site/19json-validator.git"
+  },
+  "keywords": [
+    "json",
+    "validator"
+  ],
+  "author": "19site",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/19Site/19json-validator/issues"
+  },
+  "homepage": "https://github.com/19Site/19json-validator#readme"
+}
