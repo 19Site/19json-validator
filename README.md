@@ -23,7 +23,9 @@ const input = {
 
     description: '1a student',
 
-    skills: ['read', 'write', 'speak']
+    skills: ['read', 'write', 'speak'],
+
+    orderBy: '[{"field":"id","direction":"asc"}]'
 };
 
 // schema
@@ -76,6 +78,16 @@ const schema = {
         
         // is array
         isArray: true
+    },
+
+    // orderBy field
+    orderBy: {
+
+        // optional
+        optional: true,
+        
+        // is json
+        isJson: true
     }
 };
 

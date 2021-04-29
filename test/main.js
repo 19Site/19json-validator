@@ -166,5 +166,38 @@ const Validator = require(Path.join(__dirname, '..', 'lib', 'main.js'));
 			// next
 			return done(undefined);
 		});
+
+		it('test isJson', done => {
+
+			// should success
+			try {
+
+				Validator.validate({ foo: '{}' }, { foo: { isJson: true } });
+
+				Validator.validate({ foo: '' }, { foo: { isJson: false } });
+			} catch (err) {
+
+				return done(err);
+			}
+
+			// should failure
+			try {
+
+				Validator.validate({ foo: '[]' }, { foo: { isJson: false } });
+
+				return done(new Error('should throw error'));
+			} catch (err) { }
+
+			// should failure
+			try {
+
+				Validator.validate({ foo: '' }, { foo: { isJson: true } });
+
+				return done(new Error('should throw error'));
+			} catch (err) { }
+
+			// next
+			return done(undefined);
+		});
 	});
 })();
