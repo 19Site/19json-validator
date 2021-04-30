@@ -21,6 +21,8 @@ const input = {
 
     name: 'tom',
 
+    email: 'tom@example.com',
+
     description: '1a student',
 
     skills: ['read', 'write', 'speak'],
@@ -55,6 +57,16 @@ const schema = {
 
         // not allow empty
         empty: false
+    },
+
+    // email field
+    email: {
+
+        // optional when id present
+        optional: input.hasOwnProperty('id'),
+
+        // is email
+        isEmail: true
     },
 
     // description field

@@ -140,20 +140,10 @@ const Validator = require(Path.join(__dirname, '..', 'lib', 'main.js'));
 			try {
 
 				Validator.validate({ foo: [] }, { foo: { isArray: true } });
-
-				Validator.validate({ foo: '' }, { foo: { isArray: false } });
 			} catch (err) {
 
 				return done(err);
 			}
-
-			// should failure
-			try {
-
-				Validator.validate({ foo: [] }, { foo: { isArray: false } });
-
-				return done(new Error('should throw error'));
-			} catch (err) { }
 
 			// should failure
 			try {
@@ -173,8 +163,6 @@ const Validator = require(Path.join(__dirname, '..', 'lib', 'main.js'));
 			try {
 
 				Validator.validate({ foo: '{}' }, { foo: { isJson: true } });
-
-				Validator.validate({ foo: '' }, { foo: { isJson: false } });
 			} catch (err) {
 
 				return done(err);
@@ -183,15 +171,30 @@ const Validator = require(Path.join(__dirname, '..', 'lib', 'main.js'));
 			// should failure
 			try {
 
-				Validator.validate({ foo: '[]' }, { foo: { isJson: false } });
+				Validator.validate({ foo: '' }, { foo: { isJson: true } });
 
 				return done(new Error('should throw error'));
 			} catch (err) { }
 
+			// next
+			return done(undefined);
+		});
+
+		it('test isEmail', done => {
+
+			// should success
+			try {
+
+				Validator.validate({ foo: 'hihi@gmail.com' }, { foo: { isEmail: true } });
+			} catch (err) {
+
+				return done(err);
+			}
+
 			// should failure
 			try {
 
-				Validator.validate({ foo: '' }, { foo: { isJson: true } });
+				Validator.validate({ foo: '' }, { foo: { isEmail: true } });
 
 				return done(new Error('should throw error'));
 			} catch (err) { }
