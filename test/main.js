@@ -202,5 +202,67 @@ const Validator = require(Path.join(__dirname, '..', 'lib', 'main.js'));
 			// next
 			return done(undefined);
 		});
+
+		it('test childSchema', done => {
+
+			// should success
+			try {
+
+				Validator.validate({ foo: { bar: 1, car: 'hello world' } }, { foo: { isJson: true, childSchema: { bar: { type: 'number' }, car: { type: 'string' } } } });
+
+				Validator.validate({ foo: { car: 'hello world' } }, { foo: { isJson: true, childSchema: { bar: { optional: true, type: 'number' }, car: { type: 'string' } } } });
+
+				Validator.validate({ foo: { car: 'hello world', dar: { ear: 'far' } } }, { foo: { isJson: true, childSchema: { bar: { optional: true, type: 'number' }, car: { type: 'string' }, dar: { isJson: true, childSchema: { ear: { type: 'string' } } } } } });
+			} catch (err) {
+
+				return done(err);
+			}
+
+			// should failure
+			try {
+
+				Validator.validate({ foo: { bar: 1, car: 'hello world' } }, { foo: { isJson: true, childSchema: { bar: { type: 'number' }, car: { type: 'string' } } } });
+
+				Validator.validate({ foo: { car: 'hello world' } }, { foo: { isJson: true, childSchema: { bar: { type: 'number' }, car: { type: 'string' } } } });
+
+				Validator.validate({ foo: { car: 'hello world', dar: { ear: 1 } } }, { foo: { isJson: true, childSchema: { bar: { optional: true, type: 'number' }, car: { type: 'string' }, dar: { isJson: true, childSchema: { ear: { type: 'string' } } } } } });
+
+				return done(new Error('should throw error'));
+			} catch (err) { }
+
+			// next
+			return done(undefined);
+		});
+
+		it('test childrenSchema', done => {
+
+			// should success
+			try {
+
+				Validator.validate({ foo: [{ bar: 1, car: 'hello world' }] }, { foo: { isArray: true, childrenSchema: { bar: { type: 'number' }, car: { type: 'string' } } } });
+
+				Validator.validate({ foo: [{ car: 'hello world' }] }, { foo: { isArray: true, childrenSchema: { bar: { optional: true, type: 'number' }, car: { type: 'string' } } } });
+
+				Validator.validate({ foo: [{ bar: [{ dar: 'j', md: 1 }, { dar: 'k' }], car: 'hello world' }] }, { foo: { isArray: true, childrenSchema: { bar: { isArray: true, childrenSchema: { dar: { type: 'string' }, md: { optional: true, type: 'number' } } }, car: { type: 'string' } } } });
+			} catch (err) {
+
+				return done(err);
+			}
+
+			// should failure
+			try {
+
+				Validator.validate({ foo: [{ bar: '1', car: 'hello world' }] }, { foo: { isArray: true, childrenSchema: { bar: { type: 'number' }, car: { type: 'string' } } } });
+
+				Validator.validate({ foo: [{ car: 'hello world' }] }, { foo: { isArray: true, childrenSchema: { bar: { type: 'number' }, car: { type: 'string' } } } });
+
+				Validator.validate({ foo: [{ bar: [{ dar: 'j', md: 1 }, { dar: 'k' }], car: 'hello world' }] }, { foo: { isArray: true, childrenSchema: { bar: { isArray: true, childrenSchema: { dar: { type: 'string' }, md: { type: 'number' } } }, car: { type: 'string' } } } });
+
+				return done(new Error('should throw error'));
+			} catch (err) { }
+
+			// next
+			return done(undefined);
+		});
 	});
 })();
