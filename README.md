@@ -25,7 +25,21 @@ const input = {
 
     description: '1a student',
 
-    skills: ['read', 'write', 'speak'],
+    father: {
+
+        name: 'father tom',
+
+        age: 48
+    },
+
+    skills: [
+        
+        'read', 
+        
+        'write', 
+        
+        'speak'
+    ],
 
     orderBy: '[{"field":"id","direction":"asc"}]'
 };
@@ -82,6 +96,36 @@ const schema = {
         empty: true
     },
 
+    // father field
+    father: {
+
+        // optional
+        optional: true,
+        
+        // is json
+        isJson: true,
+
+        // child schema
+        childSchema: {
+
+            // child name field
+            name: {
+
+                type: 'string'
+            },
+
+            // child age field
+            age: {
+
+                // type
+                type: ['number', 'string'],
+
+                // regex
+                regex: /^[1-9][0-9]*$/
+            }
+        }
+    },
+
     // skills field
     skills: {
 
@@ -89,7 +133,17 @@ const schema = {
         optional: true,
         
         // is array
-        isArray: true
+        isArray: true,
+
+        // check for each children element
+        childrenSchema: {
+
+            // check directly input value
+            direct: true,
+
+            // type
+            type: 'string'
+        }
     },
 
     // orderBy field
@@ -98,8 +152,28 @@ const schema = {
         // optional
         optional: true,
         
-        // is json
-        isJson: true
+        // is array
+        isArray: true,        
+
+        // check for each children element
+        childrenSchema: {
+
+            // elements field
+            field: {
+
+                type: 'string'
+            },
+
+            // elements direction
+            direction: {
+
+                // type
+                type: 'string',
+
+                // regexp
+                regex: /^(a|de)sc$/
+            }
+        }
     }
 };
 
