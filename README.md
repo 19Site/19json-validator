@@ -1,6 +1,6 @@
 # 19json-validator
 
-Simple JSON schema validator
+Simple JSON schema validator.
 
 # Install
 
@@ -189,8 +189,56 @@ try {
 }
 ```
 
-### Test
+# Test
 
 ```sh
 $ npm test
 ```
+
+# Schema config
+
+The following config options can help you to build your own json check schema for validation.
+
+### optional (boolean, default: false)
+
+true = allow target key missing, false = must contain key.
+
+### type (string | array&lt;string&gt;)
+
+restrict target value of key should equal to given types, use underlying `typeof` to perform type checking.
+
+### regex (object instanceof RegExp)
+
+restrict target value of key should match to given regular expression, this checking will add a empty string to the end of the value for non-string value.
+
+### empty (boolean, default: true)
+
+true = accept empty value, false = reject empty value.
+
+### isArray (boolean, default: false)
+
+true = value must be a valid array object or a valid json array string.
+
+### isJson (boolean, default: false)
+
+true = value must be a valid object or a valid json object string.
+
+### isEmail (boolean, default: false)
+
+true = input value must be in valid email format.
+
+### childSchema (object)
+
+check input value with provided child schema, use for nested json object structure.
+
+### childrenSchema (object)
+
+check input (array) values with provided child schema, use for json array checking.
+
+### direct (boolean, default: false)
+
+true = use schema to check the input value directly, use for non-object input checking.
+
+
+
+
