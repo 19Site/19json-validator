@@ -25,6 +25,8 @@ const input = {
 
     description: '1a student',
 
+    mother: null,
+
     father: {
 
         name: 'father tom',
@@ -96,11 +98,47 @@ const schema = {
         empty: true
     },
 
+    // mother field
+    mother: {
+
+        // optional
+        optional: true,
+
+        // nullable
+        nullable: true,
+        
+        // is json
+        isJson: true,
+
+        // child schema
+        childSchema: {
+
+            // child name field
+            name: {
+
+                type: 'string'
+            },
+
+            // child age field
+            age: {
+
+                // type
+                type: ['number', 'string'],
+
+                // regex
+                regex: /^[1-9][0-9]*$/
+            }
+        }
+    },
+
     // father field
     father: {
 
         // optional
         optional: true,
+
+        // nullable
+        nullable: true,
         
         // is json
         isJson: true,
@@ -202,6 +240,10 @@ The following config options can help you to build your own json check schema fo
 ### optional (boolean, default: false)
 
 true = allow target key missing, false = must contain key.
+
+### nullable (boolean)
+
+true = allow target value is (null) object or 'null' string, false = target value must not equal to (null) object or 'null' string.
 
 ### type (string | array&lt;string&gt;)
 

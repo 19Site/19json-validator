@@ -8,6 +8,41 @@ const Validator = require(Path.join(__dirname, '..', 'lib', 'main.js'));
 
 	describe('Validator', r => {
 
+		it('test nullable', done => {
+
+			// should success
+			try {
+
+				Validator.validate({ foo: null }, { foo: { nullable: true } });
+
+				Validator.validate({ foo: 'null' }, { foo: { nullable: true } });
+
+				Validator.validate({ foo: 1 }, { foo: { nullable: false } });
+			} catch (err) {
+
+				return done(err);
+			}
+
+			// should failure
+			try {
+
+				Validator.validate({ foo: null }, { foo: { nullable: false } });
+
+				return done(new Error('should throw error'));
+			} catch (err) { }
+
+			// should failure
+			try {
+
+				Validator.validate({ foo: 'null' }, { foo: { nullable: false } });
+
+				return done(new Error('should throw error'));
+			} catch (err) { }
+
+			// next
+			return done(undefined);
+		});
+
 		it('test optional', done => {
 
 			// should success
