@@ -15,7 +15,7 @@ const Validator = require(Path.join(__dirname, '..', 'lib', 'main.js'));
 			// should success
 			try {
 
-				Validator.validate({ foo: null, bar: 'null' }, { foo: { nullable: true }, bar: { nullable: true } });
+				Validator.validate({ foo: null, bar: 'null' }, { foo: { nullable: true } }, { allowExtraProperties: true });
 			} catch (err) {
 
 				return done(err);
@@ -24,7 +24,7 @@ const Validator = require(Path.join(__dirname, '..', 'lib', 'main.js'));
 			// should failure
 			try {
 
-				Validator.validate({ foo: null, bar: 'null' }, { foo: { nullable: true } });
+				Validator.validate({ foo: null, bar: 'null' }, { foo: { nullable: true } }, { allowExtraProperties: false });
 
 				return done(new Error('should throw error'));
 			} catch (err) {

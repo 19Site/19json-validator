@@ -233,6 +233,10 @@ try {
 $ npm test
 ```
 
+# Usage
+
+validate(input, schema, options)
+
 # Schema config
 
 The following config options can help you to build your own json check schema for validation.
@@ -281,6 +285,8 @@ check input (array) values with provided child schema, use for json array checki
 
 true = use schema to check the input value directly, use for non-object input checking.
 
+# options
 
+### allowExtraProperties (boolean, default: true)
 
-
+true = allow properties that not defined in schema, false = do not allow properties that not defined in schema
