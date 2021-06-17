@@ -2,11 +2,39 @@
 
 const Path = require('path');
 
+const Assert = require('assert');
+
 const Validator = require(Path.join(__dirname, '..', 'lib', 'main.js'));
 
 (() => {
 
 	describe('Validator', r => {
+
+		it('test unspecified keys', done => {
+
+			// should success
+			try {
+
+				Validator.validate({ foo: null, bar: 'null' }, { foo: { nullable: true }, bar: { nullable: true } });
+			} catch (err) {
+
+				return done(err);
+			}
+
+			// should failure
+			try {
+
+				Validator.validate({ foo: null, bar: 'null' }, { foo: { nullable: true } });
+
+				return done(new Error('should throw error'));
+			} catch (err) {
+
+				Assert.equal(err.message, 'unknown input bar');
+			}
+
+			// next
+			return done(undefined);
+		});
 
 		it('test nullable', done => {
 
@@ -29,7 +57,10 @@ const Validator = require(Path.join(__dirname, '..', 'lib', 'main.js'));
 				Validator.validate({ foo: null }, { foo: { nullable: false } });
 
 				return done(new Error('should throw error'));
-			} catch (err) { }
+			} catch (err) {
+
+				Assert.equal(err.message, 'invalid value of foo');
+			}
 
 			// should failure
 			try {
@@ -37,7 +68,10 @@ const Validator = require(Path.join(__dirname, '..', 'lib', 'main.js'));
 				Validator.validate({ foo: 'null' }, { foo: { nullable: false } });
 
 				return done(new Error('should throw error'));
-			} catch (err) { }
+			} catch (err) {
+
+				Assert.equal(err.message, 'invalid value of foo');
+			}
 
 			// next
 			return done(undefined);
@@ -64,7 +98,10 @@ const Validator = require(Path.join(__dirname, '..', 'lib', 'main.js'));
 				Validator.validate({}, { foo: {} });
 
 				return done(new Error('should throw error'));
-			} catch (err) { }
+			} catch (err) {
+
+				Assert.equal(err.message, 'invalid value of foo');
+			}
 
 			// should failure
 			try {
@@ -72,7 +109,10 @@ const Validator = require(Path.join(__dirname, '..', 'lib', 'main.js'));
 				Validator.validate({}, { foo: { optional: false } });
 
 				return done(new Error('should throw error'));
-			} catch (err) { }
+			} catch (err) {
+
+				Assert.equal(err.message, 'invalid value of foo');
+			}
 
 			// next
 			return done(undefined);
@@ -103,7 +143,10 @@ const Validator = require(Path.join(__dirname, '..', 'lib', 'main.js'));
 				Validator.validate({ foo: 'tom' }, { foo: { type: 'number' } });
 
 				return done(new Error('should throw error'));
-			} catch (err) { }
+			} catch (err) {
+
+				Assert.equal(err.message, 'invalid value of foo');
+			}
 
 			// should failure
 			try {
@@ -111,7 +154,10 @@ const Validator = require(Path.join(__dirname, '..', 'lib', 'main.js'));
 				Validator.validate({ foo: 1 }, { foo: { type: 'string' } });
 
 				return done(new Error('should throw error'));
-			} catch (err) { }
+			} catch (err) {
+
+				Assert.equal(err.message, 'invalid value of foo');
+			}
 
 			// next
 			return done(undefined);
@@ -140,7 +186,10 @@ const Validator = require(Path.join(__dirname, '..', 'lib', 'main.js'));
 				Validator.validate({ foo: '' }, { foo: { empty: false } });
 
 				return done(new Error('should throw error'));
-			} catch (err) { }
+			} catch (err) {
+
+				Assert.equal(err.message, 'invalid value of foo');
+			}
 
 			// next
 			return done(undefined);
@@ -163,7 +212,10 @@ const Validator = require(Path.join(__dirname, '..', 'lib', 'main.js'));
 				Validator.validate({ foo: ' ' }, { foo: { regex: /^$/ } });
 
 				return done(new Error('should throw error'));
-			} catch (err) { }
+			} catch (err) {
+
+				Assert.equal(err.message, 'invalid value of foo');
+			}
 
 			// next
 			return done(undefined);
@@ -186,7 +238,10 @@ const Validator = require(Path.join(__dirname, '..', 'lib', 'main.js'));
 				Validator.validate({ foo: '' }, { foo: { isArray: true } });
 
 				return done(new Error('should throw error'));
-			} catch (err) { }
+			} catch (err) {
+
+				Assert.equal(err.message, 'invalid value of foo');
+			}
 
 			// next
 			return done(undefined);
@@ -209,7 +264,10 @@ const Validator = require(Path.join(__dirname, '..', 'lib', 'main.js'));
 				Validator.validate({ foo: '' }, { foo: { isJson: true } });
 
 				return done(new Error('should throw error'));
-			} catch (err) { }
+			} catch (err) {
+
+				Assert.equal(err.message, 'invalid value of foo');
+			}
 
 			// next
 			return done(undefined);
@@ -232,7 +290,10 @@ const Validator = require(Path.join(__dirname, '..', 'lib', 'main.js'));
 				Validator.validate({ foo: '' }, { foo: { isEmail: true } });
 
 				return done(new Error('should throw error'));
-			} catch (err) { }
+			} catch (err) {
+
+				Assert.equal(err.message, 'invalid value of foo');
+			}
 
 			// next
 			return done(undefined);
@@ -259,7 +320,10 @@ const Validator = require(Path.join(__dirname, '..', 'lib', 'main.js'));
 				Validator.validate({ foo: { bar: 1, car: 'hello world' } }, { foo: { isJson: true, childSchema: { bar: { type: 'string' }, car: { type: 'string' } } } });
 
 				return done(new Error('should throw error'));
-			} catch (err) { }
+			} catch (err) {
+
+				Assert.equal(err.message, 'invalid value of bar');
+			}
 
 			// should failure
 			try {
@@ -267,7 +331,10 @@ const Validator = require(Path.join(__dirname, '..', 'lib', 'main.js'));
 				Validator.validate({ foo: { car: 'hello world' } }, { foo: { isJson: true, childSchema: { bar: { type: 'number' }, car: { type: 'string' } } } });
 
 				return done(new Error('should throw error2'));
-			} catch (err) { }
+			} catch (err) {
+
+				Assert.equal(err.message, 'invalid value of bar');
+			}
 
 			// should failure
 			try {
@@ -275,7 +342,10 @@ const Validator = require(Path.join(__dirname, '..', 'lib', 'main.js'));
 				Validator.validate({ foo: { car: 'hello world', dar: { ear: 1 } } }, { foo: { isJson: true, childSchema: { bar: { optional: true, type: 'number' }, car: { type: 'string' }, dar: { isJson: true, childSchema: { ear: { type: 'string' } } } } } });
 
 				return done(new Error('should throw error3'));
-			} catch (err) { }
+			} catch (err) {
+
+				Assert.equal(err.message, 'invalid value of ear');
+			}
 
 			// next
 			return done(undefined);
@@ -302,7 +372,10 @@ const Validator = require(Path.join(__dirname, '..', 'lib', 'main.js'));
 				Validator.validate({ foo: [{ bar: '1', car: 'hello world' }] }, { foo: { isArray: true, childrenSchema: { bar: { type: 'number' }, car: { type: 'string' } } } });
 
 				return done(new Error('should throw error'));
-			} catch (err) { }
+			} catch (err) {
+
+				Assert.equal(err.message, 'invalid value of bar');
+			}
 
 			// should failure
 			try {
@@ -310,7 +383,10 @@ const Validator = require(Path.join(__dirname, '..', 'lib', 'main.js'));
 				Validator.validate({ foo: [{ car: 'hello world' }] }, { foo: { isArray: true, childrenSchema: { bar: { type: 'number' }, car: { type: 'string' } } } });
 
 				return done(new Error('should throw error'));
-			} catch (err) { }
+			} catch (err) {
+
+				Assert.equal(err.message, 'invalid value of bar');
+			}
 
 			// should failure
 			try {
@@ -318,7 +394,10 @@ const Validator = require(Path.join(__dirname, '..', 'lib', 'main.js'));
 				Validator.validate({ foo: [{ bar: [{ dar: 'j', md: 1 }, { dar: 'k' }], car: 'hello world' }] }, { foo: { isArray: true, childrenSchema: { bar: { isArray: true, childrenSchema: { dar: { type: 'string' }, md: { type: 'number' } } }, car: { type: 'string' } } } });
 
 				return done(new Error('should throw error'));
-			} catch (err) { }
+			} catch (err) {
+
+				Assert.equal(err.message, 'invalid value of md');
+			}
 
 			// next
 			return done(undefined);
@@ -345,7 +424,10 @@ const Validator = require(Path.join(__dirname, '..', 'lib', 'main.js'));
 				Validator.validate('hello world', { direct: true, type: 'number' });
 
 				return done(new Error('should throw error'));
-			} catch (err) { }
+			} catch (err) {
+
+				Assert.equal(err.message, 'invalid value of foo');
+			}
 
 			// next
 			return done(undefined);
