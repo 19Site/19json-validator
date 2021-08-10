@@ -221,6 +221,32 @@ const Validator = require(Path.join(__dirname, '..', 'lib', 'main.js'));
 			return done(undefined);
 		});
 
+		it('test inValues', done => {
+
+			// should success
+			try {
+
+				Validator.validate({ foo: 'bar' }, { foo: { inValues: ['bar'] } });
+			} catch (err) {
+
+				return done(err);
+			}
+
+			// should failure
+			try {
+
+				Validator.validate({ foo: 'bar1' }, { foo: { inValues: ['bar'] } });
+
+				return done(new Error('should throw error'));
+			} catch (err) {
+
+				Assert.equal(err.message, 'invalid value of foo');
+			}
+
+			// next
+			return done(undefined);
+		});
+
 		it('test isArray', done => {
 
 			// should success

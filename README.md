@@ -25,6 +25,8 @@ const input = {
 
     description: '1a student',
 
+    emailAgent: 'gmail',
+
     mother: null,
 
     father: {
@@ -96,6 +98,18 @@ const schema = {
 
         // allow empty
         empty: true
+    },
+
+    emailAgent:{
+
+        inValues: [
+
+            'gmail',
+
+            'ymail',
+
+            'hotmail'
+        ]
     },
 
     // mother field
